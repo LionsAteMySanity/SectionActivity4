@@ -14,15 +14,17 @@
                 this.input.on('pointerdown', (event) => {
                     this.tweens.add({
                         targets: this.meep,
-                        scale: 2,
-                        duration: 100
+                        scale: 2.5,
+                        duration: 500,
+                        ease: 'Bounce.Out'
                     });
                 });
                 this.input.on('pointerup', (event) => {
                     this.tweens.add({
                         targets: this.meep,
                         scale: 1,
-                        duration: 100
+                        duration: 333,
+                        ease: 'Cubic.InOut'
                     });
                 });
 
@@ -31,23 +33,24 @@
                 let {x,y,isDown} = this.input.activePointer;
                 this.meep.setPosition(x,y);
 
-                if(isDown && Math.random() < 0.025) {
+                if(isDown && Math.random() < 0.125) {
                     // twerk the mouse
                     this.tweens.add({
                         targets: this.meep,
-                        angle: {from: -5, to: 0},
-                        duration: 250
+                        angle: {from: -30, to: 0},
+                        duration: 500,
+                        ease: 'Cubic.Out'
                     });
 
                     // spawn a dropping
-                    let dropping = this.add.circle(x+10,y+10,2).setFillStyle(0,1);
+                    let dropping = this.add.circle(x+10,y+10,Phaser.Math.Between(2,8)).setFillStyle(0x352315, 1);
                     dropping.setDepth(-1); // below the mouse
 
                     // shoot away quickly
                     this.tweens.add({
                         targets: dropping,
-                        x: '+=' + (10*Math.random()),
-                        y: '+=' + (10*Math.random()),
+                        x: '+=' + (25*Math.random()),
+                        y: '+=' + (25*Math.random()),
                         duration: 250,
                         ease: 'Cubic.out'
                     });
@@ -56,7 +59,7 @@
                     this.tweens.add({
                         targets: dropping,
                         alpha: {from: 0.5, to: 0},
-                        duration: 5000,
+                        duration: dropping.radius * 875,
                         ease: 'Cubic.in',
                         onComplete: () => dropping.destroy()
                     });
@@ -68,7 +71,7 @@
             width: 640,
             height: 520,
             scene: Demo,
-            backgroundColor: 0xdddddd,
+            backgroundColor: 0xcceeee,
             parent: 'here'
         });
     </script>
